@@ -1,0 +1,1 @@
+-e git+https://github.com/python-oca/python-oca#egg=oca
