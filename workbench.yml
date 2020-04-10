@@ -1,0 +1,7 @@
+---
+- hosts: workbench
+  roles:
+    - workbench
+    - keep_proxy
+    - keep_web
+    - keep_balance

@@ -1,0 +1,4 @@
+---
+- hosts: keepstore
+  roles:
+    - keep_store

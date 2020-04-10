@@ -1,0 +1,8 @@
+---
+# file: site.yml
+- import_playbook: main.yml
+- import_playbook: sso.yml
+- import_playbook: workbench.yml
+- import_playbook: keepstore.yml
+- import_playbook: worker.yml
+- import_playbook: shell.yml

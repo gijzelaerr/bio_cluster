@@ -1,0 +1,4 @@
+---
+- hosts: shell
+  roles:
+    - shell

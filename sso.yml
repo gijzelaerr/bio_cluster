@@ -1,0 +1,4 @@
+---
+- hosts: sso
+  roles:
+    - sso

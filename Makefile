@@ -2,26 +2,26 @@ VENV=$(CURDIR)/venv
 
 .PHONY: install
 
-all: ${VENV}/installed
+all: $(VENV)/installed
 
-${VENV}/bin/pip:
+$(VENV)/bin/pip:
 	python3 -m venv venv
 
-${VENV}/installed: ${VENV}/bin/pip
-	${VENV}/bin/pip install -r requirements.txt
-	touch ${VENV}/installed
+$(VENV)/installed: $(VENV)/bin/pip
+	$(VENV)/bin/pip install -r requirements.txt
+	touch $(VENV)/installed
 
-install: ${VENV}/installed
+install: $(VENV)/installed
 
-hosts: instyall
-	${VENV}/bin/python oca_helper.py iplist > hosts
+hosts: install
+	$(VENV)/bin/python oca_helper.py iplist > hosts
 
 ansible: hosts
-	${VENV}/bin/ansible-playbook -i hosts ansible.yml
+	$(VENV)/bin/ansible-playbook -i hosts site.yml
 
 create: install
-	${VENV}/bin/python oca_helper.py create
+	$(VENV)/bin/python oca_helper.py create
 
 destroy: install
-	${VENV}/bin/python oca_helper.py destroy
+	$(VENV)/bin/python oca_helper.py destroy
 

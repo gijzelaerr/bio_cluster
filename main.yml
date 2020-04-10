@@ -1,0 +1,9 @@
+---
+- hosts: main
+  roles:
+    - postgres
+    - arvados_api
+    - arvados_controller
+    - git
+    - websockets
+    - container_dispatcher
