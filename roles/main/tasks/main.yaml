@@ -1,21 +1,55 @@
 
 
+- name: Add phusionpassenger key to APT keychain
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: 561F9B9CAC40B2F7
+
+- name: Add phusionpassenger repository to apt configuration
+  apt_repository:
+    repo: deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main
+    state: present
+
+
+
 - name: Install packages
   apt:
     name:
       - postgresql
       - arvados-api-server
       - arvados-controller
-      - ruby-bundler
-      - nginx
-      - ruby-dev
+      - ruby-bundler        # required for arvados packages
+      - nginx               # required for arvados packages
+      - ruby-dev            # required for arvados packages
+      - python3-psycopg2    # required for postgresql_user
+      - acl                 # required for postgrsql_user become_user
+      - libnginx-mod-http-passenger  # required for nginx arvados configuration
 
 - name: Create arvados postgrsql user
+  become_user: postgres
   postgresql_user:
     name: arvados
     password: TODOmakesecure
 
 - name: Create arvados postgresql database
+  become_user: postgres
   postgresql_db:
     name: arvados
     owner: arvados
+
+
+- name: Copy main specific Arvados config
+  template:
+    src: config.yml
+    dest: /etc/arvados/config.yml
+
+
+- name: Copy Arvados NGINX config
+  template:
+    src: arvados-api-and-controller.conf
+    dest: /etc/nginx/conf.d/arvados-api-and-controller.conf
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted

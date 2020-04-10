@@ -3,6 +3,7 @@
   remote_user: ubuntu
   become: true
   roles:
+    - common
     - main
 #    - arvados_api
 #    - arvados_controller
