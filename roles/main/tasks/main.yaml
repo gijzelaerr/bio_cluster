@@ -1,5 +1,21 @@
 
 
-- name: Install PostgreSQL
+- name: Install packages
   apt:
-    name: postgresql
+    name:
+      - postgresql
+      - arvados-api-server
+      - arvados-controller
+      - ruby-bundler
+      - nginx
+      - ruby-dev
+
+- name: Create arvados postgrsql user
+  postgresql_user:
+    name: arvados
+    password: TODOmakesecure
+
+- name: Create arvados postgresql database
+  postgresql_db:
+    name: arvados
+    owner: arvados

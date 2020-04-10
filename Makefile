@@ -25,3 +25,6 @@ create: install
 destroy: install
 	$(VENV)/bin/python oca_helper.py destroy
 
+
+main: install
+	$(VENV)/bin/ansible-playbook -i hosts main.yml
