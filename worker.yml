@@ -1,4 +1,7 @@
 ---
 - hosts: worker
+  remote_user: ubuntu
+  become: true
   roles:
-    - worker
+    - common
+#    - worker

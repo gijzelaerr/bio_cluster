@@ -1,0 +1,16 @@
+- name: Install required packages
+  apt:
+    name:
+      - gpg
+      - dirmngr
+      - gpg-agent
+
+- name: Add Arvados key to APT keychain
+  apt_key:
+    keyserver: pool.sks-keyservers.net
+    id: 1078ECD7
+
+- name: Add Arvados repository to apt configuration
+  apt_repository:
+    repo: deb http://apt.arvados.org/ bionic main
+    state: present

@@ -1,4 +1,7 @@
 ---
 - hosts: keepstore
+  remote_user: ubuntu
+  become: true
   roles:
-    - keep_store
+    - common
+#    - keep_store

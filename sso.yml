@@ -1,4 +1,7 @@
 ---
 - hosts: sso
+  remote_user: ubuntu
+  become: true
   roles:
-    - sso
+    - common
+#    - sso

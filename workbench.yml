@@ -1,7 +1,10 @@
 ---
 - hosts: workbench
+  remote_user: ubuntu
+  become: true
   roles:
-    - workbench
-    - keep_proxy
-    - keep_web
-    - keep_balance
+    - common
+#    - workbench
+#    - keep_proxy
+#    - keep_web
+#    - keep_balance

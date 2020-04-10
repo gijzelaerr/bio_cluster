@@ -16,7 +16,7 @@ install: $(VENV)/installed
 hosts: install
 	$(VENV)/bin/python oca_helper.py iplist > hosts
 
-ansible: hosts
+ansible: install
 	$(VENV)/bin/ansible-playbook -i hosts site.yml
 
 create: install

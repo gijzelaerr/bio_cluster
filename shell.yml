@@ -1,4 +1,7 @@
 ---
 - hosts: shell
+  remote_user: ubuntu
+  become: true
   roles:
-    - shell
+    - common
+#    - shell

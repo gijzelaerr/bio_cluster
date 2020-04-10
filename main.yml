@@ -1,9 +1,11 @@
 ---
 - hosts: main
+  remote_user: ubuntu
+  become: true
   roles:
-    - postgres
-    - arvados_api
-    - arvados_controller
-    - git
-    - websockets
-    - container_dispatcher
+    - main
+#    - arvados_api
+#    - arvados_controller
+#    - git
+#    - websockets
+#    - container_dispatcher
