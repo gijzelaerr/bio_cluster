@@ -4,9 +4,6 @@ Create a file ~/.surfsara with content:
 user=<username>
 pass=<password>
 
-Also you need to do some tasks manually since the OCA API is an unmaintained
-"enfant terrible":
-
  * login to https://ui.hpccloud.surfsara.nl/
  * make sure you are in the user view
  * go to Apps
@@ -17,18 +14,28 @@ Also you need to do some tasks manually since the OCA API is an unmaintained
    on the CLI or change in this script.
 
 """
-import click
 import oca
 import os
 import sys
 
-
-# settings
 DEFAULT_TEMPLATE_ID = 14190
-DEFAULT_MEMORY = 2048  # GB
-DEFAULT_CPU = 4
-DEFAULT_VCPU = 4
-DEFAULT_NODES_NUM = 10
+
+# hostname, CPUs, MEM
+layout = {
+    'main':
+        [('main', 4, 16 * 1024)],
+
+    'sso':
+        [('sso', 2, 2 * 1024)],
+
+    'keep':
+        [('keep', 2, 8 * 1024)],
+
+    'store': [
+        ('store0', 2, 4 * 1024),
+        ('store1', 2, 4 * 1024),
+    ]
+}
 
 # you probably don't want to change these
 config_path = os.path.expanduser("~/.surfsara")
@@ -55,39 +62,20 @@ def read_config():
     return config
 
 
-def init_client(config, endpoint):
-    return oca.Client(config['user'] + ':' + config['pass'], endpoint)
+def init_client(user, pass_, endpoint):
+    return oca.Client(f"{user}:{pass_}", endpoint)
 
 
-@click.group()
-@click.pass_context
-def cli(context):
-    config = read_config()
-    context.obj = init_client(config, endpoint)
-
-
-@cli.command()
-@click.option('--inactive', default=False, type=bool)
-@click.pass_obj
-def iplist(client, inactive):
+def iplist(client):
     vp = oca.VirtualMachinePool(client)
     vp.info()
-    click.echo("[nodes]")
     for vm in vp:
-        if not inactive and (vm.state != vm.ACTIVE):
-            continue
-        ip_list = list(v.ip for v in vm.template.nics)
-        click.echo(ip_list[0])
+        name = vm.name
+        ip = list(v.ip for v in vm.template.nics)[0]
+        yield name, ip
 
 
-@cli.command()
-@click.option('--memory', default=DEFAULT_MEMORY, type=int)
-@click.option('--cpu', default=DEFAULT_CPU, type=float)
-@click.option('--vcpu', default=DEFAULT_VCPU, type=int)
-@click.option('--number', help='Number of nodes', default=DEFAULT_NODES_NUM, type=int)
-@click.option('--template_id', default=DEFAULT_TEMPLATE_ID, type=int)
-@click.pass_obj
-def create(client, memory, cpu, vcpu, number, template_id):
+def create(client, name, memory, cpu, vcpu, number, template_id):
     extra_template = """
     MEMORY = {}
     CPU = {}
@@ -97,20 +85,25 @@ def create(client, memory, cpu, vcpu, number, template_id):
     tp.info()
     template = tp.get_by_id(template_id)
     for i in range(number):
-        name = "workflow-{}".format(i)
-        click.echo("creating node '{}'".format(name))
+        print("creating node '{}'".format(name))
         template.instantiate(name=name, extra_template=extra_template)
 
 
-@cli.command()
-@click.pass_obj
 def destroy(client):
     vmp = oca.VirtualMachinePool(client=client)
     vmp.info()
     for i in vmp:
-        click.echo("destroying node '{}'".format(i.name))
+        print("destroying node '{}'".format(i.name))
         i.delete()
 
 
 if __name__ == '__main__':
-    cli()
+    config = read_config()
+    client = init_client(config['user'], config['pass'], endpoint=endpoint)
+    destroy(client)
+
+    #for group, value in layout.items():
+    #    for name, cpus, mem in value:
+    #        create(client, name, mem, cpus, cpus, 1, template_id=DEFAULT_TEMPLATE_ID)
+
+    print(list(iplist(client)))
