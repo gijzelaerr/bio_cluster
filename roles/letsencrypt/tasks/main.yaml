@@ -58,6 +58,10 @@
     port: '80'
     proto: tcp
 
+- name: "bla bla"
+  debug:
+    msg: "{{ acme_challenge_your_domain }}"
+
 - name: "Implement http-01 challenge files"
   copy:
     content: "{{ acme_challenge_your_domain['challenge_data'][item]['http-01']['resource_value'] }}"
@@ -67,7 +71,6 @@
     mode: u=rw,g=r,o=r
   with_items:
     - "{{ domain_name }}"
-
 
 - name: "Complete Let's Encrypt challenges"
   acme_certificate:

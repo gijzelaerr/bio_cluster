@@ -1,6 +1,0 @@
-SystemRootToken: "$system_root_token"
-ManagementToken: "$management_token"
-API:
-  RailsSessionSecretToken: "$rails_secret_token"
-Collections:
-  BlobSigningKey: "blob_signing_key"

@@ -14,8 +14,3 @@
   apt_repository:
     repo: deb http://apt.arvados.org/ bionic main
     state: present
-
-- name: Copy global Arvados config
-  template:
-    src: config.yml
-    dest: /etc/arvados/config.yml

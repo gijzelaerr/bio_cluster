@@ -1,0 +1,25 @@
+Clusters:
+  {{ cluster_id }}:
+    SystemRootToken: "{{ system_root_token }}"
+    ManagementToken: "{{ management_token }}"
+    API:
+      RailsSessionSecretToken: "{{ rails_secret_token }}"
+    Collections:
+      BlobSigningKey: "{{ blob_signing_key }}"
+
+    PostgreSQL:
+      Connection:
+        host: localhost
+        user: arvados
+        password: {{ arvados_database_password }}
+        dbname: arvados
+
+    Services:
+      Controller:
+        ExternalURL: "https://{{ domain_name }}"
+        InternalURLs:
+          "http://localhost:8003": {}
+      RailsAPI:
+        # Does not have an ExternalURL
+        InternalURLs:
+          "http://localhost:8004": {}

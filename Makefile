@@ -27,4 +27,4 @@ destroy: install
 
 
 main: install
-	$(VENV)/bin/ansible-playbook -i hosts main.yml
+	$(VENV)/bin/ansible-playbook -i hosts arvados_master.yml

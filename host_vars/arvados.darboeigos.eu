@@ -9,3 +9,12 @@ letsencrypt_csrs_dir: /etc/letsencrypt/csrs
 letsencrypt_certs_dir: /etc/letsencrypt/certs
 letsencrypt_account_key: /etc/letsencrypt/account/account.key
 domain_name: arvados.darboeigos.eu
+
+cluster_id: gijsm
+
+# TODO: make secure and unique per deployment
+system_root_token: fRQqc5ZEl8KiqLOj8DQvRg24wxSyDoJZUWfuJgga6feyIxd1EG
+management_token: ZWm1miiktXPbaIyt1P2pGGvqbSF9gCoHkWrCGyMGADUJg7qFgA
+rails_secret_token: LnPAS51bFS5rWFp5MEexmzJdBzh8wwIdztJCnUo5uTWOPYsvKQ
+blob_signing_key: vJ0VuBAmQelQ7r39hZry16KgFmBE3J8TcILrCMU5Lq0mkdFmZF
+arvados_database_password: nltXTtwwd1xPhDtCyjq3

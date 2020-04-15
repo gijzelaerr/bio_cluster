@@ -1,4 +1,4 @@
-[main]
+[arvados_master]
 arvados.darboeigos.eu  # 145.100.58.67
 
 [sso]

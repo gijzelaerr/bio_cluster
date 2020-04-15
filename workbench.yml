@@ -3,7 +3,7 @@
   remote_user: ubuntu
   become: true
   roles:
-    - common
+    - arvados_repo
 #    - workbench
 #    - keep_proxy
 #    - keep_web

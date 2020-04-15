@@ -1,11 +1,11 @@
 ---
-- hosts: main
+- hosts: arvados_master
   remote_user: ubuntu
   become: true
   roles:
+    - arvados_repo
 #    - letsencrypt
-#    - common
-    - main
+    - arvados_master
 #    - arvados_api
 #    - arvados_controller
 #    - git
