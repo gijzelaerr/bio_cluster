@@ -1,0 +1,25 @@
+
+
+- name: Install packages
+  apt:
+    name:
+      - git
+      - openssh-server
+
+
+- name: Create git user
+  user:
+    name: git
+    comment: git
+    home: /var/lib/arvados/git
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: change user
+  become: git
+
+- git:
+    rep: https://github.com/sitaramc/gitolite
+    dest: /var/lib/arvados/git/gitolite
+    version: v3.6.11

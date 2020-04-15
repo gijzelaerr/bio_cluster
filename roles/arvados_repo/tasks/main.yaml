@@ -14,3 +14,4 @@
   apt_repository:
     repo: deb http://apt.arvados.org/ bionic main
     state: present
+
