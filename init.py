@@ -6,7 +6,7 @@ pass=<password>
 
  * login to https://ui.hpccloud.surfsara.nl/
  * make sure you are in the user view
- * go to Apps
+ * go to Storage -> Apps
  * select an "app" (like Ubuntu-16.04.3-Server (2017-12-07)) and press
    "openNebula"
  * select local_images_ssh datastore and then press "download"
@@ -100,10 +100,11 @@ def destroy(client):
 if __name__ == '__main__':
     config = read_config()
     client = init_client(config['user'], config['pass'], endpoint=endpoint)
-    destroy(client)
+    #destroy(client)
 
-    #for group, value in layout.items():
-    #    for name, cpus, mem in value:
-    #        create(client, name, mem, cpus, cpus, 1, template_id=DEFAULT_TEMPLATE_ID)
+    for group, value in layout.items():
+        for name, cpus, mem in value:
+            create(client, name, mem, cpus, cpus, 1, template_id=DEFAULT_TEMPLATE_ID)
 
     print(list(iplist(client)))
+

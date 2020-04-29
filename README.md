@@ -15,6 +15,21 @@ Tooling for setting up an Arvados Bio cluster at SURFsara
  * https://doc.arvados.org/v2.0/install/install-manual-prerequisites.html
 
 
+# Get started
+
+Read the top of init.py and follow the instructions
+
+```
+python3 -m venv env3
+. env3/bin/activate
+pip install -U pip
+pip install -U setuptools wheel
+pip install -rrequirements.txt
+python init.py
+```
+
+Then transform the output into ".ini" format and update the "hosts" file
+
 # The configuration
 
 ## main server
