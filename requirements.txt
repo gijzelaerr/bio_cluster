@@ -1,3 +1,4 @@
 -e git+https://github.com/python-oca/python-oca#egg=oca
 ansible
 click
+paramiko
